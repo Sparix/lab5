@@ -1,0 +1,17 @@
+/** Class Punct creates object of punctuation symbol.
+ *
+ * @version 1.0 10 June 2020.
+ */
+
+
+public class Punct {
+	private char data;
+
+	Punct(char ch) {
+		data = ch;
+	}
+
+	public char getPunct() {
+		return data;
+	}
+}
