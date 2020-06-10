@@ -1,0 +1,25 @@
+/** Class Letter creates object of letter.
+ *  Class has getter, setter, constructor.
+ *
+ * @version 1.0 10 June 2020.
+ */
+
+class Letter {
+	private char data;
+
+
+	Letter(char symbol) {
+		data = symbol;
+	}
+
+	// Метод повертає задану букву
+	char getLetter() {
+		return data;
+	}
+
+	// Метод перевіряє чи є задана буква шуканою
+	boolean isMyLetter() {
+		String letter=String.valueOf(data);
+		return (letter.equalsIgnoreCase("a"));
+	}
+}
