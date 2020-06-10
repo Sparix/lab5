@@ -1,0 +1,84 @@
+/** Class Text creates object and divides it into array of sentences.
+ *
+ * @version 1.0 10 June 2020.
+ */
+
+class Text {
+	private Sentence[] data;
+
+	Text(String text) {
+		char symbol;
+		int i, j, k = 0;
+
+		// Виконуємо заміну послідовності табуляцій одним пробілом
+		text = tab(text);
+
+		// Знаходимо кількість речень у тексті
+		for (j = 0; j < text.length(); j++) {
+			symbol = text.charAt(j);
+			if (symbol == '.') {
+				if ((j > 1) && (j < text.length() - 1) && ((text.charAt(j + 1) == '.') && (text.charAt(j + 2) == '.'))){
+					k++;
+					j++;
+					j++;
+				} else k++;
+			} else if ((symbol == '?') | (symbol == '!')) k++;
+		}
+
+		// Створюємо масив об'єктів класу Sentence розміром k
+		Sentence[] sentenses = new Sentence[k];
+		i = 0;
+		int l = -1;
+
+		//записуємо кожне речення у елемент масиву sentenses
+		for (j = 0; j < text.length(); j++) {
+			symbol = text.charAt(j);
+			if (symbol == '.') {
+				if ((j > 1) && (j < text.length() - 1) && ((text.charAt(j + 1) == '.') && (text.charAt(j + 2) == '.'))){
+					l++;
+					sentenses[l] = new Sentence(text.substring(i, j + 3));
+					i = j + 3;
+					j++;
+					j++;
+				} else {
+					l++;
+					sentenses[l] = new Sentence(text.substring(i, j + 1));
+					i = j + 2;
+				}
+			} else if ((symbol == '?') | (symbol == '!')) {
+				l++;
+				sentenses[l] = new Sentence(text.substring(i, j + 1));
+				i = j + 2;
+			}
+		}
+		data = sentenses;
+	}
+
+	// Метод замінює послідовність табуляцій одним пробілом
+	private String tab(String str) {
+		StringBuffer x = new StringBuffer(str);
+		for (int i = 0; i < x.length(); i++) {
+			if (x.charAt(i) == ' ') {
+				do
+					if (x.charAt(i + 1) == ' ') x.deleteCharAt(i);
+				while ((x.charAt(i + 1) == ' '));
+				if (x.charAt(i + 1) == ' ') x.deleteCharAt(i);
+				else if (x.charAt(i + 1) == '.') x.deleteCharAt(i);
+				else if (x.charAt(i + 1) == '!') x.deleteCharAt(i);
+				else if (x.charAt(i + 1) == '?') x.deleteCharAt(i);
+			}
+		}
+		str = new String(x);
+		return str;
+	}
+
+	// Метод повертає речення по його номеру i
+	String getSentences(int i) {
+		return data[i].GetSen();
+	}
+
+	// Метод повертає кількість речень
+	int sentenceNumber() {
+		return data.length;
+	}
+}
