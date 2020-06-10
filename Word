@@ -1,0 +1,38 @@
+/** Class Word creates object and divides it into array of letters.
+ *
+ * @version 1.0 10 June 2020.
+ */
+
+class Word {
+	private Letter[] data;
+
+
+	Word(String word_string) {
+		Letter[] letters_word = new Letter[word_string.length()];
+		for (int i = 0; i < word_string.length(); i++) {
+			letters_word[i] = new Letter(word_string.charAt(i));
+		}
+		data = letters_word;
+	}
+
+	// Метод повертає слово
+	String getWord() {
+		String str;
+		String word = "";
+		for (Letter aData : data) {
+			str = String.valueOf(aData.getLetter());
+			word = word.concat(str);
+		}
+		return word;
+	}
+
+	// Метод повертає кількість входження шуканої літери у заданому слові
+	int find() {
+		int counter = 0;
+		for (Letter aData : data) {
+			if (aData.isMyLetter())
+				counter++;
+		}
+		return counter;
+	}
+}
