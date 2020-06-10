@@ -1,0 +1,75 @@
+/**
+ * Завдання: Модифікувати лабораторну роботу №3 наступним чином: для літер, слів, речень, розділових знаків та тексту
+ * створити окремі класи. Слово повинно складатися з масиву літер, речення з масиву слів та розділових знаків,
+ * текст з масиву речень. Замінити послідовність табуляцій та пробілів одним пробілом.
+ *
+ * Створити клас, який складається з виконавчого методу, що виконує описану дію з лабораторної роботи №3
+ * (відсортувати слова заданого тексту за зростанням кількості в них заданої літери), але в якості типів використовує
+ * створені класи.
+ *
+ * Програма містить шість класів:
+ *  - Клас Letter;
+ *  - Клас Punct;
+ *  - Клас Word;
+ *  - Клас Sentence;
+ *  - Клас Text;
+ *  - Клас Lab5 (із виконавчим методом).
+ *
+ * @version 1.0 10 June 2020.
+ *
+ */
+
+public class Lab5 {
+
+	public static void main(String[] args) {
+		String text = "       You're     good at English when   you know the difference between  a man eating chicken" +
+				" and a man-eating chicken. " +
+				"The small   white buoys marked the location of    hundreds of crab pots... " +
+				"My Mum    tries to be cool by saying that she likes      all the same    things that I do. " +
+				"So long   and thanks for the fish. " +
+				"Aaaaa aaaa aaaaaaaaaa...";
+		if ((text.trim().equals(""))) System.out.println("Нема тексту!");
+		else {
+			// Створюємо об'єкт класу Text, та передаємо йому текст, який складається з масиву об'ектів класу Sentence
+			Text txt = new Text(text);
+			System.out.println("Оригінальний текст:\n" + text + "\n\nПоправлений текст розбитий на речення:");
+			for (int i = 0; i < txt.sentenceNumber(); i++) {
+				System.out.println("\t" + txt.getSentences(i));
+			}
+
+			// Створюємо об'єкт s класу Sentence
+			Sentence s;
+			int countMyLetter, maxWordMyLetter = 0;
+
+			// Шукаємо максимальну кількість входження заданої букви в одному слові
+			for (int i = 0; i < txt.sentenceNumber(); i++) {
+				s = new Sentence(txt.getSentences(i));
+				for (int j = 0; j < s.getWord().length; j++) {
+					countMyLetter = s.getWord()[j].find();
+					if (maxWordMyLetter < countMyLetter)
+						maxWordMyLetter = countMyLetter;
+				}
+			}
+
+			// Відповідно до максимальної кількості заданої букви виводимо слова заданого тексту
+			System.out.println("\nВідсортований текст:");
+			for (int k = 0; k <= maxWordMyLetter; k++) {
+
+				// Переглядаємо всі речення
+				for (int i = 0; i < txt.sentenceNumber(); i++) {
+
+					// Передаємо об'єкту s i-те речення
+					s = new Sentence(txt.getSentences(i));
+
+					// Переглядаємо всі слова даного речення
+					for (int j = 0; j < s.getWord().length; j++) {
+						if ((k == s.getWord()[j].find())) {
+							System.out.print(s.getWord()[j].getWord().trim());
+							System.out.print(" ");
+						}
+					}
+				}
+			}
+		}
+	}
+}
